@@ -1,3 +1,5 @@
+main.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -83,6 +85,10 @@ acs-*.bib
 
 # listings
 *.lol
+
+# makefile
+*.make
+*.d
 
 # makeidx
 *.idx
