@@ -69,7 +69,7 @@
       \node [] at (1.5, 2.5) {\small firstname};
       \node [] at (4.5, 2.5) {\small age};
       \node [] at (7.5, 2.5) {\small lastname};
-      \node [dd-node] (n1) at (0, 0  ) {};
+      \node [dd-node] (n1) at (0, 0) {};
       \node [dd-node] (n2) at (3, 1) {};
       \node [dd-node] (n3) at (3,-1) {};
       \node [dd-node] (n4) at (6, 1) {};
@@ -103,31 +103,108 @@
     { firstname = "Marie-Pierre", lastname = "Castel" , age = 67 }
     { firstname = "Catherine"   , lastname = "Greiner", age = 38 }
   \end{minted}
+  \begin{center}
   \begin{tikzpicture}
-    \node [] at (1.5, 2.5) {\small firstname};
-    \node [] at (4.5, 2.5) {\small age};
-    \node [] at (7.5, 2.5) {\small lastname};
-    \node [dd-node] (n1) at (0, 0  ) {};
-    \node [dd-node] (n2) at (3, 1) {};
-    \node [dd-node] (n3) at (3,-1) {};
-    \node [dd-node] (n4) at (6, 1) {};
-    \node [dd-node] (n5) at (6,-1) {};
-    \node [dd-terminal] (t1) at (9, 0) {};
-    \draw [dd-arc] (n1) -- (n2)
+    \node [] at (0, 2) {\small firstname};
+    \node [] at (3, 2) {\small age};
+    \node [] at (6, 2) {\small lastname};
+    \draw [dashed] (0, 2) -- (0,-2);
+    \draw [dashed] (3, 2) -- (3,-2);
+    \draw [dashed] (6, 2) -- (6,-2);
+%
+\only<1>{%
+    \node [dd-node] (n11) at (0, 1) {};
+    \node [dd-node] (n12) at (3, 1) {};
+    \node [dd-node] (n13) at (6, 1) {};
+    \node [dd-terminal] (t11) at (9, 1) {};
+    \node [dd-node] (n21) at (0, 0) {};
+    \node [dd-node] (n22) at (3, 0) {};
+    \node [dd-node] (n23) at (6, 0) {};
+    \node [dd-terminal] (t21) at (9, 0) {};
+    \node [dd-node] (n31) at (0,-1) {};
+    \node [dd-node] (n32) at (3,-1) {};
+    \node [dd-node] (n33) at (6,-1) {};
+    \node [dd-terminal] (t31) at (9,-1) {};
+}%
+\only<2>{%
+    \node [dd-node] (n11) at (0, 0) {};
+    \node [dd-node] (n12) at (3, 1) {};
+    \node [dd-node] (n13) at (6, 1) {};
+    \node [dd-terminal] (t11) at (9, 1) {};
+    \node [dd-node] (n21) at (0, 0) {};
+    \node [dd-node] (n22) at (3, 0) {};
+    \node [dd-node] (n23) at (6, 0) {};
+    \node [dd-terminal] (t21) at (9, 0) {};
+    \node [dd-node] (n31) at (0, 0) {};
+    \node [dd-node] (n32) at (3,-1) {};
+    \node [dd-node] (n33) at (6,-1) {};
+    \node [dd-terminal] (t31) at (9,-1) {};
+}%
+\only<3>{%
+    \node [dd-node] (n11) at (0, 0) {};
+    \node [dd-node] (n12) at (3, 1) {};
+    \node [dd-node] (n13) at (6, 1) {};
+    \node [dd-terminal] (t11) at (9, 1) {};
+    \node [dd-node] (n21) at (0, 0) {};
+    \node [dd-node] (n22) at (3,-1) {};
+    \node [dd-node] (n23) at (6, 0) {};
+    \node [dd-terminal] (t21) at (9, 0) {};
+    \node [dd-node] (n31) at (0, 0) {};
+    \node [dd-node] (n32) at (3,-1) {};
+    \node [dd-node] (n33) at (6,-1) {};
+    \node [dd-terminal] (t31) at (9,-1) {};
+}%
+\only<4>{%
+    \node [dd-node] (n11) at (0, 0) {};
+    \node [dd-node] (n12) at (3, 1) {};
+    \node [dd-node] (n13) at (6, 1) {};
+    \node [dd-terminal] (t11) at (9, 0) {};
+    \node [dd-node] (n21) at (0, 0) {};
+    \node [dd-node] (n22) at (3,-1) {};
+    \node [dd-node] (n23) at (6, 0) {};
+    \node [dd-terminal] (t21) at (9, 0) {};
+    \node [dd-node] (n31) at (0, 0) {};
+    \node [dd-node] (n32) at (3,-1) {};
+    \node [dd-node] (n33) at (6,-1) {};
+    \node [dd-terminal] (t31) at (9, 0) {};
+}%
+\only<5>{%
+    \node [dd-node] (n11) at (0, 0) {};
+    \node [dd-node] (n12) at (3, 1) {};
+    \node [dd-node] (n13) at (6, 1) {};
+    \node [dd-terminal] (t11) at (9, 0) {};
+    \node [dd-node] (n21) at (0, 0) {};
+    \node [dd-node] (n22) at (3,-1) {};
+    \node [dd-node] (n23) at (6, 1) {};
+    \node [dd-terminal] (t21) at (9, 0) {};
+    \node [dd-node] (n31) at (0, 0) {};
+    \node [dd-node] (n32) at (3,-1) {};
+    \node [dd-node] (n33) at (6,-1) {};
+    \node [dd-terminal] (t31) at (9, 0) {};
+}%
+%
+    \draw [dd-arc] (n11) -- (n12)
      node [dd-valuation, above] {Marie-Pierre};
-    \draw [dd-arc] (n1) -- (n3)
-     node [dd-valuation, below] {Catherine};
-    \draw [dd-arc] (n2) -- (n4)
+    \draw [dd-arc] (n12) -- (n13)
      node [dd-valuation, above] {67};
-    \draw [dd-arc] (n3) -- (n4)
-     node [dd-valuation, above] {67};
-    \draw [dd-arc] (n3) -- (n5)
-     node [dd-valuation, below] {38};
-    \draw [dd-arc] (n4) -- (t1)
+    \draw [dd-arc] (n13) -- (t11)
      node [dd-valuation, above] {Castel};
-    \draw [dd-arc] (n5) -- (t1)
-     node [dd-valuation, below] {Greiner};
+%
+    \draw [dd-arc] (n21) -- (n22)
+     node [dd-valuation, above] {Catherine};
+    \draw [dd-arc] (n22) -- (n23)
+     node [dd-valuation, above] {67};
+    \draw [dd-arc] (n23) -- (t21)
+     node [dd-valuation, above] {Castel};
+%
+    \draw [dd-arc] (n31) -- (n32)
+     node [dd-valuation, above] {Catherine};
+    \draw [dd-arc] (n32) -- (n33)
+     node [dd-valuation, above] {38};
+    \draw [dd-arc] (n33) -- (t31)
+     node [dd-valuation, above] {Greiner};
   \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
