@@ -787,7 +787,126 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Can we do better}
+  \frametitle{Can we do better?}
+  \begin{block}<2->{Yes!}
+    Merge edge valuation and attributed edges:
+    \begin{itemize}
+      \item for variables
+      \item for terminals
+      \item for arc valuations
+      \item for successors
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\newcommand{\plus}[1]{\oplus}
+\renewcommand{\common}[1]{\odot}
+\newcommand{\minus}[1]{\ominus}
+\newcommand{\zero}[1]{0}
+
+\begin{frame}
+  \frametitle{Data Type}
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{scope}[shift={(-4cm, 0cm)}]
+        \node [coordinate]
+              (r) at (0, .5)
+              {};
+        \node [dd-node]
+              (n) at (0, 0)
+              {};
+        \node [coordinate]
+              (sl) at (-.5, -.5)
+              {};
+        \node [coordinate]
+              (sr) at ( .5, -.5)
+              {};
+        \draw (r) -- (n)
+              node [midway, left]
+              {};
+        \draw (n) -- (sl)
+              node [midway, left]
+              {$v_l$};
+        \draw (n) -- (sr)
+              node [midway, right]
+              {$v_r$};
+      \end{scope}
+      \begin{scope}[shift={(2cm, -1cm)}]
+        \node [coordinate]
+              (r) at (0, .5)
+              {};
+        \node [dd-node]
+              (n) at (0,0)
+              {};
+        \node [coordinate]
+              (sl) at (-.5, -.5)
+              {};
+        \node [coordinate]
+              (sr) at ( .5, -.5)
+              {};
+        \draw (r) -- (n)
+              node [midway, left]
+              {$c = v_l \odot v_r$};
+        \draw (n) -- (sl)
+              node [midway, left]
+              {$r_l = v_l \ominus c$};
+        \draw (n) -- (sr)
+              node [midway, right]
+              {$r_r = v_r \ominus c$};
+      \end{scope}
+      \begin{scope}[shift={(-4cm, -2cm)}]
+        \node [coordinate]
+              (r) at (0, .5)
+              {};
+        \node [dd-node]
+              (n) at (0, 0)
+              {};
+        \node [coordinate]
+              (sl) at (-.5, -.5)
+              {};
+        \node [coordinate]
+              (sr) at ( .5, -.5)
+              {};
+        \draw (r) -- (n)
+              node [midway, left]
+              {};
+        \draw (n) -- (sl)
+              node [midway, left]
+              {$v_l = c \oplus r_l$};
+        \draw (n) -- (sr)
+              node [midway, right]
+              {$v_r = c \oplus r_r$};
+      \end{scope}
+      \draw [->, red!30, line width=5pt]
+            (-3,0) .. controls (0, 0) and (0,-2) .. (-1.5,-2);
+    \end{tikzpicture}
+  \end{center}
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{itemize}
+        \item $\common{X} : \mathcal{X} \times \dots \times \mathcal{X} \rightarrow \mathcal{X}$ \\
+          common part
+        \item
+          $\minus{X} : \mathcal{X} \times \mathcal{X} \rightarrow \mathcal{X}$ \\
+          $\text{label} \minus{X} \text{common}$
+      \end{itemize}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      \begin{itemize}
+        \item
+          $\plus{X} : \mathcal{X} \times \mathcal{X} \rightarrow \mathcal{X}$ \\
+          $\text{common} \plus{X} \text{remaining}$
+        \item $\zero{X} \in \mathcal{X}$ \\
+          default value
+      \end{itemize}
+    \end{column}
+    \begin{column}{.28\textwidth}
+      \begin{itemize}
+        \item $\forall v, c \in \mathcal{X}$ \\
+          $v = c \plus{X} (v \minus{X} c)$
+      \end{itemize}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
@@ -806,28 +925,205 @@
   \frametitle{Edges}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Benchmarks}
+  \begin{center}
+  \begin{tabular}{|l|c|c|c|c|}
+    \hline
+                 & min   & max   & avg  & dev  \\
+    \hline
+    nodes ratio  & $<1$  & .80   & .21  & .14  \\
+    label ratio  & $<1$  & 53.88 & 1.20 & 4.87 \\
+    \hline
+  \end{tabular}
+  \par\bigskip\par
+  \only<1>{%
+  \begin{tikzpicture}[yscale=3]
+    \useasboundingbox (-1.1,-.3) rectangle (11.6,1);
+    \node [coordinate] (n) at (0,0.5) {};
+    \foreach \y in {0,2,4,6,8} \draw(0,\y/10) node [anchor=east] {\scriptsize\y0};
+    \foreach \x in {0,1,2,3,4,5,6,7,8,9} \draw(\x,0) node [anchor=north] {\scriptsize.\x};
+    \node at (5.5,-.1) [anchor=north] {\scriptsize \# final nodes / \# initial nodes};
+    \node at (0,1) [anchor=south] {\scriptsize \# DDs};
+    \draw [line width=10mm, draw=blue!30]
+          plot [ycomb] coordinates {
+            (0.5,.62)
+            (1.5,.52)
+            (2.5,.65)
+            (3.5,.44)
+            (4.5,.22)
+            (5.5,.02)
+            (6.5,.03)
+            (7.5,.01)
+            (8.5,.01)
+            (9.5,.0)
+            (10.5,.0)
+          };
+    \draw [gray] (0,0) grid[xstep=1,ystep=.2] (11,1);
+  \end{tikzpicture}
+  }%
+  \only<2>{%
+  \begin{tikzpicture}[yscale=3]
+    \useasboundingbox (-1.1,-.3) rectangle (9,1.4);
+    \node [coordinate] (n) at (0,0.5) {};
+    \foreach \y in {0,2,4,6,8,10,12} \draw(0,\y/10) node [anchor=east] {\scriptsize\y0};
+    \node at (0,0) [anchor=north] {\scriptsize 0};
+    \node at (1,0) [anchor=north] {\scriptsize .2};
+    \node at (2,0) [anchor=north] {\scriptsize .4};
+    \node at (3,0) [anchor=north] {\scriptsize .6};
+    \node at (4,0) [anchor=north] {\scriptsize .8};
+    \node at (5,0) [anchor=north] {\scriptsize 1};
+    \node at (6,0) [anchor=north] {\scriptsize 1.5};
+    \node at (7,0) [anchor=north] {\scriptsize 5};
+    \node at (4.5,-.1) [anchor=north] {\scriptsize \# final labels / \# initial labels};
+    \node at (0,1.2) [anchor=south] {\scriptsize \# DDs};
+    \draw [line width=10mm, draw=blue!30]
+          plot [ycomb] coordinates {
+            (0.5,.36)
+            (1.5,.80)
+            (2.5,.85)
+            (3.5,.20)
+            (4.5,.14)
+            (5.5,.04)
+            (6.5,.04)
+            (7.5,.09)
+           };
+    \draw [gray] (0,0) grid[xstep=1,ystep=.2] (8,1.2);
+  \end{tikzpicture}
+  }%
+  \end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Stack Compression}
+  \begin{itemize}
+    \item compress stacks
+    \item long repetitive sequences
+    \item use the Sequitur~\cite{1997-nevill-0} algorithm
+  \end{itemize}
+  \begin{minted}{lua}
+    abcabdabcabd
+    0 → 1 1
+    1 → 2 c 2 d
+    2 → a b
+  \end{minted}
 \end{frame}
 
 \begin{frame}
   \frametitle{Benchmarks}
+  \begin{center}
+  \begin{tabular}{|l|c|c|c|c|}
+    \hline
+                 & min   & max   & avg  & dev  \\
+    \hline
+    nodes ratio  & $<1$  & .80   & .21  & .14  \\
+    label ratio  & $<1$  & 1.15  & .29  & .18  \\
+    \hline
+  \end{tabular}
+  \par\bigskip\par
+  \begin{tikzpicture}[yscale=3]
+    \useasboundingbox (-1.1,-.3) rectangle (9,1.4);
+    \node [coordinate] (n) at (0,0.5) {};
+    \foreach \y in {0,2,4,6,8,10,12} \draw(0,\y/10) node [anchor=east] {\scriptsize\y0};
+    \node at (0,0) [anchor=north] {\scriptsize 0};
+    \node at (1,0) [anchor=north] {\scriptsize .2};
+    \node at (2,0) [anchor=north] {\scriptsize .4};
+    \node at (3,0) [anchor=north] {\scriptsize .6};
+    \node at (4,0) [anchor=north] {\scriptsize .8};
+    \node at (5,0) [anchor=north] {\scriptsize 1};
+    \node at (6,0) [anchor=north] {\scriptsize 1.1};
+    \node at (7,0) [anchor=north] {\scriptsize 1.2};
+    \node at (4.5,-.1) [anchor=north] {\scriptsize \# final labels / \# initial labels};
+    \node at (0,1.2) [anchor=south] {\scriptsize \# DDs};
+    \draw [line width=10mm, draw=blue!30]
+          plot [ycomb] coordinates {
+            (0.5,.76)
+            (1.5,1.17)
+            (2.5,.50)
+            (3.5,.04)
+            (4.5,.01)
+            (5.5,.03)
+            (6.5,.01)
+            (7.5,.0)
+           };
+    \draw [gray] (0,0) grid[xstep=1,ystep=.2] (8,1.2);
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{Variable Order}
+  \begin{center}
+    \only<1>{%
+      \includegraphics[height=6cm]{bdd-order-bad}
+    }%
+    \only<2>{%
+      \includegraphics[height=6cm]{bdd-order-good}
+    }%
+  \end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{Benchmarks}
+  \begin{center}
+  \begin{tabular}{|l|c|c|c|c|}
+    \hline
+                & min  & max & avg & dev  \\
+    \hline
+    nodes ratio & $<1$ & .36 & .08 & .08  \\
+    label ratio & $1 $ & .59 & .13 & .12   \\
+    \hline
+  \end{tabular}
+  \par\bigskip\par
+  \begin{tikzpicture}[xscale=.8,yscale=3]
+    \useasboundingbox (-1.2,-.3) rectangle (5,1.4);
+    \node [coordinate] (n) at (0,0.5) {};
+    \foreach \y in {0,2,4,6,8,10,12} \draw(0,\y/10) node [anchor=east] {\scriptsize\y0};
+    \foreach \x in {0,1,2,3,4} \draw(\x,0) node [anchor=north] {\scriptsize.\x};
+    \node at (2.5,-.1) [anchor=north] {\scriptsize \# final nodes / \# initial nodes};
+    \node at (0,1.2) [anchor=south] {\scriptsize \# DDs};
+    \draw [line width=8mm, draw=blue!30]
+          plot [ycomb] coordinates {
+            (0.5,.84)
+            (1.5,.12)
+            (2.5,.09)
+            (3.5,.05)
+            (4.5,.0)
+          };
+    \draw [gray] (0,0) grid[xstep=1,ystep=.2] (4.5,1.2);
+  \end{tikzpicture}
+  \begin{tikzpicture}[xscale=.8,yscale=3]
+    \useasboundingbox (-1.2,-.3) rectangle (5,1.4);
+    \node [coordinate] (n) at (0,0.5) {};
+    \foreach \y in {0,2,4,6,8,10,12} \draw(0,\y/10) node [anchor=east] {\scriptsize\y0};
+    \node at (0,0) [anchor=north] {\scriptsize 0};
+    \node at (1,0) [anchor=north] {\scriptsize .2};
+    \node at (2,0) [anchor=north] {\scriptsize .4};
+    \node at (3,0) [anchor=north] {\scriptsize .6};
+    \node at (4,0) [anchor=north] {\scriptsize .8};
+    \node at (2.5,-.1) [anchor=north] {\scriptsize \# final labels / \# initial labels};
+    \node at (0,1.2) [anchor=south] {\scriptsize \# DDs};
+    \draw [line width=8mm, draw=blue!30]
+          plot [ycomb] coordinates {
+            (0.5,.76)
+            (1.5,.31)
+            (2.5,.29)
+            (3.5,.01)
+           };
+    \draw [gray] (0,0) grid[xstep=1,ystep=.2] (4.5,1.2);
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{Conclusion}
+  \begin{itemize}
+    \item Generalization of many DD types
+    \item Generalization of many DD optimizations
+    \item Very compact representation
+    \item Reduction of dependency on variable order
+    \item Need to publish, but where?
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
