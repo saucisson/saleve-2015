@@ -7,9 +7,7 @@
 \usetheme{Boadilla}
 \usecolortheme{crane}
 
-\usetikzlibrary{shapes}
-\usetikzlibrary{plotmarks}
-\usetikzlibrary{calc}
+\usetikzlibrary{arrows,calc,plotmarks,shapes}
 \tikzstyle{dd-root}=[
   shape=diamond
 , minimum size=1em
@@ -37,8 +35,7 @@
 , shape=rectangle
 , minimum width=1em
 , minimum height=1em
-, midway
-, sloped
+, very near start
 ]
 \tikzstyle{dd-arc}=[
   -latex
@@ -76,19 +73,19 @@
       \node [dd-node] (n5) at (6,-1) {};
       \node [dd-terminal] (t1) at (9, 0) {};
       \draw [dd-arc] (n1) -- (n2)
-       node [dd-valuation, above] {Marie-Pierre};
+       node [dd-valuation, above, midway, sloped] {Marie-Pierre};
       \draw [dd-arc] (n1) -- (n3)
-       node [dd-valuation, below] {Catherine};
+       node [dd-valuation, below, midway, sloped] {Catherine};
       \draw [dd-arc] (n2) -- (n4)
-       node [dd-valuation, above] {67};
+       node [dd-valuation, above, midway, sloped] {67};
       \draw [dd-arc] (n3) -- (n4)
-       node [dd-valuation, above] {67};
+       node [dd-valuation, above, midway, sloped] {67};
       \draw [dd-arc] (n3) -- (n5)
-       node [dd-valuation, below] {38};
+       node [dd-valuation, below, midway, sloped] {38};
       \draw [dd-arc] (n4) -- (t1)
-       node [dd-valuation, above] {Castel};
+       node [dd-valuation, above, midway, sloped] {Castel};
       \draw [dd-arc] (n5) -- (t1)
-       node [dd-valuation, below] {Greiner};
+       node [dd-valuation, below, midway, sloped] {Greiner};
     \end{tikzpicture}
   \end{block}
 \end{frame}
@@ -104,13 +101,14 @@
     { firstname = "Catherine"   , lastname = "Greiner", age = 38 }
   \end{minted}
   \begin{center}
+  \only<1-5>{%
   \begin{tikzpicture}
-    \node [] at (0, 2) {\small firstname};
-    \node [] at (3, 2) {\small age};
-    \node [] at (6, 2) {\small lastname};
-    \draw [dashed] (0, 2) -- (0,-2);
-    \draw [dashed] (3, 2) -- (3,-2);
-    \draw [dashed] (6, 2) -- (6,-2);
+    \node [] at (0, 4) {\small firstname};
+    \node [] at (3, 4) {\small age};
+    \node [] at (6, 4) {\small lastname};
+    \draw [dashed] (0, 4) -- (0,-2);
+    \draw [dashed] (3, 4) -- (3,-2);
+    \draw [dashed] (6, 4) -- (6,-2);
 %
 \only<1>{%
     \node [dd-node] (n11) at (0, 1) {};
@@ -184,35 +182,608 @@
 }%
 %
     \draw [dd-arc] (n11) -- (n12)
-     node [dd-valuation, above] {Marie-Pierre};
+     node [dd-valuation, above, midway, sloped] {Marie-Pierre};
     \draw [dd-arc] (n12) -- (n13)
-     node [dd-valuation, above] {67};
+     node [dd-valuation, above, midway, sloped] {67};
     \draw [dd-arc] (n13) -- (t11)
-     node [dd-valuation, above] {Castel};
+     node [dd-valuation, above, midway, sloped] {Castel};
 %
     \draw [dd-arc] (n21) -- (n22)
-     node [dd-valuation, above] {Catherine};
+     node [dd-valuation, above, midway, sloped] {Catherine};
     \draw [dd-arc] (n22) -- (n23)
-     node [dd-valuation, above] {67};
+     node [dd-valuation, above, midway, sloped] {67};
     \draw [dd-arc] (n23) -- (t21)
-     node [dd-valuation, above] {Castel};
+     node [dd-valuation, above, midway, sloped] {Castel};
 %
     \draw [dd-arc] (n31) -- (n32)
-     node [dd-valuation, above] {Catherine};
+     node [dd-valuation, above, midway, sloped] {Catherine};
     \draw [dd-arc] (n32) -- (n33)
-     node [dd-valuation, above] {38};
+     node [dd-valuation, above, midway, sloped] {38};
     \draw [dd-arc] (n33) -- (t31)
-     node [dd-valuation, above] {Greiner};
+     node [dd-valuation, above, midway, sloped] {Greiner};
+  \end{tikzpicture}
+  }%
+  \only<6->{%
+  \begin{tikzpicture}
+    \node [dd-node] (n1) at (0, 0) {c};
+    \node [dd-node] (n2) at (3, 1) {b};
+    \node [dd-node] (n3) at (3,-1) {b};
+    \node [dd-node] (n4) at (6, 1) {a};
+    \node [dd-node] (n5) at (6,-1) {a};
+    \node [dd-node] (m3) at (6, 3) {a};
+    \node [dd-terminal] (t1) at (9, 0) {1};
+    \node [dd-terminal] (t0) at (9, 3) {0};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, below] {1};
+    \draw [dd-arc] (n2) -- (n4)
+     node [dd-valuation, below] {1};
+    \draw [dd-arc] (n3) -- (n4)
+     node [dd-valuation, above] {1};
+    \draw [dd-arc] (n3) -- (n5)
+     node [dd-valuation, below] {0};
+    \draw [dd-arc] (n4) -- (t1)
+     node [dd-valuation, below] {0};
+    \draw [dd-arc] (n5) -- (t1)
+     node [dd-valuation, below] {1};
+%
+    \draw [dd-arc, above] (n4) -- (t0)
+     node [dd-valuation, above] {1};
+    \draw [dd-arc, above] (n5) -- (t0)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc, above] (m3) -- (t0)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc, above] (m3) -- (t0)
+     node [dd-valuation, below] {1};
+    \draw [dd-arc, above] (n2) -- (m3)
+     node [dd-valuation, above] {0};
+  \end{tikzpicture}
+  }%
+  \end{center}
+\end{frame}
+
+\begin{frame}[c,fragile]
+  \frametitle{Reduction: Vanishing Terminal}
+  \cite{1992-bryant-0,2010-linard-0}
+  \begin{center}
+  \begin{tikzpicture}
+    \node [dd-node] (n1) at (0, 0) {c};
+    \node [dd-node] (n2) at (3, 1) {b};
+    \node [dd-node] (n3) at (3,-1) {b};
+    \node [dd-node] (n4) at (6, 1) {a};
+    \node [dd-node] (n5) at (6,-1) {a};
+    \only<1-3>{
+      \node [dd-node] (m3) at (6, 3) {a};
+    }
+    \only<4-5>{
+      \node [dd-node, dashed] (m3) at (6, 3) {a};
+    }
+    \node [dd-terminal] (t1) at (9, 0) {1};
+    \only<1>{
+      \node [dd-terminal] (t0) at (9, 3) {0};
+    }
+    \only<2-5>{
+      \node [dd-terminal, dashed] (t0) at (9, 3) {0};
+    }
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, below] {1};
+    \draw [dd-arc] (n2) -- (n4)
+     node [dd-valuation, below] {1};
+    \draw [dd-arc] (n3) -- (n4)
+     node [dd-valuation, above] {1};
+    \draw [dd-arc] (n3) -- (n5)
+     node [dd-valuation, below] {0};
+    \draw [dd-arc] (n4) -- (t1)
+     node [dd-valuation, below] {0};
+    \draw [dd-arc] (n5) -- (t1)
+     node [dd-valuation, below] {1};
+%
+    \only<1-2>{
+      \draw [dd-arc, above] (n4) -- (t0)
+       node [dd-valuation, above] {1};
+      \draw [dd-arc, above] (n5) -- (t0)
+       node [dd-valuation, above] {0};
+      \draw [dd-arc, above] (m3) -- (t0)
+       node [dd-valuation, above] {0};
+      \draw [dd-arc, above] (m3) -- (t0)
+       node [dd-valuation, below] {1};
+    }
+    \only<3-5>{
+      \draw [dd-arc, above, dashed] (n4) -- (t0)
+       node [dd-valuation, above] {1};
+      \draw [dd-arc, above, dashed] (n5) -- (t0)
+       node [dd-valuation, above] {0};
+      \draw [dd-arc, above, dashed] (m3) -- (t0)
+       node [dd-valuation, above] {0};
+      \draw [dd-arc, above, dashed] (m3) -- (t0)
+       node [dd-valuation, below] {1};
+    }
+    \only<1-4>{
+      \draw [dd-arc, above] (n2) -- (m3)
+       node [dd-valuation, above] {0};
+    }
+    \only<5-5>{
+      \draw [dd-arc, above, dashed] (n2) -- (m3)
+       node [dd-valuation, above] {0};
+    }
+    \only<6>{}
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}[c,fragile]
+  \frametitle{Reduction: Transparent Domain}
+  \cite{1992-bryant-0,1993-minato-0,2010-linard-0}
+  \begin{center}
+  \begin{tikzpicture}
+    \node [dd-node] (n1) at (0, 0) {c};
+    \node [dd-node] (n3) at (3,-1) {b};
+    \node [dd-terminal] (t1) at (9, 0) {1};
+    \only<1>{
+      \node [dd-node] (n2) at (3, 1) {b};
+      \node [dd-node] (n4) at (6, 1) {a};
+      \node [dd-node] (n5) at (6,-1) {a};
+      \draw [dd-arc] (n2) -- (n4)
+       node [dd-valuation, below] {1};
+      \draw [dd-arc] (n4) -- (t1)
+       node [dd-valuation, below] {0};
+      \draw [dd-arc] (n5) -- (t1)
+       node [dd-valuation, below] {1};
+    }
+    \only<2>{
+      \node [dd-node] (n2) at (3, 1) {b};
+      \node [dd-node] (n4) at (6, 1) {a};
+      \node [dd-node] (n5) at (6,-1) {a};
+      \draw [dd-arc, dashed] (n2) -- (n4)
+       node [dd-valuation, below] {1};
+      \draw [dd-arc] (n4) -- (t1)
+       node [dd-valuation, below] {0};
+      \draw [dd-arc, dashed] (n5) -- (t1)
+       node [dd-valuation, below] {1};
+    }
+    \only<3>{
+      \node [dd-node] (n2) at (6, 1) {a};
+      \node [dd-node] (n4) at (6, 1) {a};
+      \node [dd-terminal] (n5) at (9, 0) {1};
+      \draw [dd-arc] (n4) -- (t1)
+       node [dd-valuation, below] {0};
+    }
+    \only<4>{
+      \node [dd-node] (n2) at (3, 1) {b};
+      \node [dd-node] (n4) at (6, 1) {a};
+      \node [dd-node] (n5) at (6,-1) {a};
+      \draw [dd-arc, dashed] (n2) -- (n4)
+       node [dd-valuation, below] {1};
+      \draw [dd-arc, dashed] (n4) -- (t1)
+       node [dd-valuation, below] {0};
+      \draw [dd-arc] (n5) -- (t1)
+       node [dd-valuation, below] {1};
+    }
+    \only<5>{
+      \node [dd-terminal] (n2) at (9, 0) {1};
+      \node [dd-terminal] (n4) at (9, 0) {1};
+      \node [dd-node] (n5) at (6,-1) {a};
+      \draw [dd-arc] (n5) -- (t1)
+       node [dd-valuation, below] {1};
+    }
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, below] {1};
+    \draw [dd-arc] (n3) -- (n4)
+     node [dd-valuation, above] {1};
+    \draw [dd-arc] (n3) -- (n5)
+     node [dd-valuation, below] {0};
   \end{tikzpicture}
   \end{center}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Attributed Edges}
+  \frametitle{Attributed Edges: Output Inverters}
+  \cite{1990-minato-0}
+  \begin{center}
+  \begin{tikzpicture}
+    \useasboundingbox (-3,5) rectangle (3,0);
+    \only<1>{
+    \node [dd-node] (n1) at (-1, 4) {b};
+    \node [dd-node] (n2) at (-2, 2) {a};
+    \node [dd-node] (m1) at ( 1, 4) {b};
+    \node [dd-node] (m2) at ( 2, 2) {a};
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n1) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (t0)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m1) -- (m2)
+     node [dd-valuation, right] {0};
+    \draw [dd-arc] (m1) -- (t0)
+     node [dd-valuation, left] {1};
+    \draw [dd-arc] (m2) -- (t0)
+     node [dd-valuation, left] {1};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, right] {0};
+    }
+    \only<2>{
+    \node [dd-node] (n1) at (-1, 4) {b};
+    \node [dd-node] (n2) at (-2, 2) {a};
+    \node [dd-node] (m1) at ( 1, 4) {b};
+    \node [dd-node] (m2) at ( 2, 2) {a};
+    \node [dd-terminal] (t0) at (0, 0) {0};
+    \node [dd-terminal] (t1) at (0, 0) {0};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc, dashed] (n1) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) |- (t0)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc, dashed] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m1) -- (m2)
+     node [dd-valuation, right] {0};
+    \draw [dd-arc] (m1) -- (t0)
+     node [dd-valuation, left] {1};
+    \draw [dd-arc] (m2) |- (t0)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc, dashed] (m2) -- (t1)
+     node [dd-valuation, left] {0};
+    }
+    \only<3>{
+    \node [dd-node] (n1) at (-1, 4) {b};
+    \node [dd-node] (n2) at (-2, 2) {a};
+    \node [dd-node] (m1) at ( 1, 4) {b};
+    \node [dd-node] (m2) at (-2, 2) {a};
+    \node [dd-terminal] (t0) at (0, 0) {0};
+    \node [dd-terminal] (t1) at (0, 0) {0};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc, dashed] (n1) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) |- (t0)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc, dashed] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc, dashed] (m1) -- (m2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (m1) -- (t0)
+     node [dd-valuation, right] {1};
+    }
+    \only<4>{
+    \node [dd-root] (r1) at (-1, 5) {};
+    \node [dd-root] (r2) at ( 1, 5) {};
+    \node [dd-node] (n1) at (-1, 4) {b};
+    \node [dd-node] (n2) at (-2, 2) {a};
+    \node [dd-node] (m1) at (-1, 4) {b};
+    \node [dd-node] (m2) at (-2, 2) {a};
+    \node [dd-terminal] (t0) at (0, 0) {0};
+    \node [dd-terminal] (t1) at (0, 0) {0};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc, dashed] (n1) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) |- (t0)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc, dashed] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (r1) -- (n1);
+    \draw [dd-arc, dashed] (r2) -- (n1);
+    }
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Attributed Edges: Input Inverters}
+  \cite{1990-minato-0}
+  \begin{center}
+  \begin{tikzpicture}
+    \useasboundingbox (-3,5) rectangle (3,0);
+    \only<1>{
+    \node [dd-node] (n1) at (-1, 4) {b};
+    \node [dd-node] (n2) at (-1, 2) {a};
+    \node [dd-node] (m1) at ( 1, 4) {b};
+    \node [dd-node] (m2) at ( 1, 2) {a};
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n1) -- (m2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (t0)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m1) -- (m2)
+     node [dd-valuation, right] {0};
+    \draw [dd-arc] (m1) -- (n2)
+     node [dd-valuation, left] {1};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, left] {1};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, right] {0};
+    }
+    \only<2>{
+    \node [dd-root] (r1) at (-1, 5) {};
+    \node [dd-root] (r2) at ( 1, 5) {};
+    \node [dd-node] (n1) at (-1, 4) {b};
+    \node [dd-node] (n2) at (-1, 2) {a};
+    \node [dd-node] (m1) at (-1, 4) {b};
+    \node [dd-node] (m2) at ( 1, 2) {a};
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n1) -- (m2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (t0)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, left] {1};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, right] {0};
+    \draw [dd-arc] (r1) -- (n1);
+    \draw [dd-arc, dashed] (r2) -- (n1);
+    }
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Attributed Edges: Variable Shifters}
+  \cite{1990-minato-0}
+  \begin{center}
+  \begin{tikzpicture}
+    \useasboundingbox (-3,5) rectangle (3,0);
+    \only<1>{
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \node [dd-node] (n1) at (-2, 4.5) {c};
+    \node [dd-node] (n2) at (-1, 3.0) {b};
+    \node [dd-node] (n3) at (-3, 1.5) {a};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (n3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n3) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n3) -- (t0)
+     node [dd-valuation, left] {0};
+    \node [dd-node] (m1) at ( 2, 6.0) {d};
+    \node [dd-node] (m2) at ( 3, 4.5) {c};
+    \node [dd-node] (m3) at ( 1, 3.0) {b};
+    \draw [dd-arc] (m1) -- (m2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m1) -- (m3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m2) -- (m3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (m3) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m3) -- (t0)
+     node [dd-valuation, left] {0};
+    }
+    \only<2>{
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \node [dd-node] (n1) at (-2, 4.5) {c};
+    \node [dd-node] (n2) at (-1, 3.0) {b};
+    \node [dd-node] (n3) at (-2, 1.5) {a};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (n3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n3) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n3) -- (t0)
+     node [dd-valuation, left] {0};
+    \node [dd-node] (m1) at ( 2, 4.5) {d};
+    \node [dd-node] (m2) at ( 1, 3.0) {c};
+    \node [dd-node] (m3) at ( 2, 1.5) {b};
+    \draw [dd-arc] (m1) -- (m2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m1) -- (m3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, left] {1};
+    \draw [dd-arc] (m2) -- (m3)
+     node [dd-valuation, right] {0};
+    \draw [dd-arc] (m3) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m3) -- (t0)
+     node [dd-valuation, left] {0};
+    }
+    \only<3>{
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \node [dd-node] (n3) at (-1, 1.5) {};
+    \node [dd-node] (m3) at (-1, 1.5) {};
+    \node [dd-node] (n1) at (-3, 4.5) {c};
+    \node [dd-node] (n2) at (-1, 3.0) {b};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n1) |- (n3)
+     node [dd-valuation, left] {0, a};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (n3)
+     node [dd-valuation, left] {0, a};
+    \draw [dd-arc] (n3) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n3) -- (t0)
+     node [dd-valuation, left] {0};
+    \node [dd-node] (m1) at ( 2, 4.5) {d};
+    \node [dd-node] (m2) at ( 2, 3.0) {c};
+    \draw [dd-arc] (m1) -- (m2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m1) -- (m3)
+     node [dd-valuation, left] {0, b};
+    \draw [dd-arc] (m2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (m2) -- (m3)
+     node [dd-valuation, left] {0, b};
+    }
+    \only<4>{
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \node [dd-node] (n2) at ( 1, 3.0) {};
+    \node [dd-node] (m2) at ( 1, 3.0) {};
+    \node [dd-node] (n3) at (-1, 1.5) {};
+    \node [dd-node] (m3) at (-1, 1.5) {};
+    \node [dd-node] (n1) at (-2, 4.5) {c};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, right] {1, b};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, left] {0, a};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (n3)
+     node [dd-valuation, left] {0, $s^1$};
+    \draw [dd-arc] (n3) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n3) -- (t0)
+     node [dd-valuation, left] {0};
+    \node [dd-node] (m1) at ( 2, 4.5) {d};
+    \draw [dd-arc] (m1) -- (m2)
+     node [dd-valuation, left] {1, c};
+    \draw [dd-arc] (m1) |- (m3)
+     node [dd-valuation, right] {0, b};
+    }
+    \only<5>{
+    \node [dd-root] (r1) at (-1, 5.5) {};
+    \node [dd-root] (r2) at ( 1, 5.5) {};
+    \node [dd-terminal] (t0) at (-1, 0) {0};
+    \node [dd-terminal] (t1) at ( 1, 0) {1};
+    \node [dd-node] (n1) at ( 0, 4.5) {};
+    \node [dd-node] (m1) at ( 0, 4.5) {};
+    \node [dd-node] (n2) at ( 1, 3.0) {};
+    \node [dd-node] (m2) at ( 1, 3.0) {};
+    \node [dd-node] (n3) at (-1, 1.5) {};
+    \node [dd-node] (m3) at (-1, 1.5) {};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, right] {1, $s^1$};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, left] {0, $s^2$};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (n3)
+     node [dd-valuation, left] {0, $s^1$};
+    \draw [dd-arc] (n3) -- (t1)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n3) -- (t0)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (r1) -- (n1)
+     node [dd-valuation, right] {c};
+    \draw [dd-arc, dashed] (r2) -- (n1)
+     node [dd-valuation, left] {d};
+    }
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{Edge-Valuation}
+  \cite{1992-lai-0,2002-ciardo-0,2008-ossowski-0}
+  \begin{center}
+  \begin{tikzpicture}
+    \useasboundingbox (-3,5) rectangle (3,0);
+    \only<1>{
+    \node [dd-node] (n1) at ( 0,3.0) {b};
+    \node [dd-node] (n2) at (-2,1.5) {a};
+    \node [dd-node] (n3) at ( 2,1.5) {a};
+    \node [dd-terminal] (t1) at (-3, 0) {0};
+    \node [dd-terminal] (t2) at (-1, 0) {2};
+    \node [dd-terminal] (t3) at ( 1, 0) {1};
+    \node [dd-terminal] (t4) at ( 3, 0) {3};
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (t1)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n2) -- (t2)
+     node [dd-valuation, right] {1};
+    \draw [dd-arc] (n3) -- (t3)
+     node [dd-valuation, left] {0};
+    \draw [dd-arc] (n3) -- (t4)
+    node [dd-valuation, right] {1};
+    }
+    \only<2>{
+    \node [dd-node] (n1) at ( 0,3.0) {b};
+    \node [dd-node] (n2) at (-2,1.5) {a};
+    \node [dd-node] (n3) at ( 2,1.5) {a};
+    \node [dd-terminal] (t1) at (-3, 0) {$\bot$};
+    \node [dd-terminal] (t2) at (-1, 0) {$\bot$};
+    \node [dd-terminal] (t3) at ( 1, 0) {$\bot$};
+    \node [dd-terminal] (t4) at ( 3, 0) {$\bot$};
+    \draw [dd-arc] (n1) -- (n2)
+          node [dd-valuation, left] {0};
+    \draw [dd-arc] (n1) -- (n3)
+          node [dd-valuation, right] {1};
+    \draw [dd-arc] (n2) -- (t1)
+          node [dd-valuation, left] {0, 0};
+    \draw [dd-arc] (n2) -- (t2)
+          node [dd-valuation, right] {1, 2};
+    \draw [dd-arc] (n3) -- (t3)
+          node [dd-valuation, left] {0, 1};
+    \draw [dd-arc] (n3) -- (t4)
+          node [dd-valuation, right] {1, 3};
+    }
+    \only<3>{
+    \node [dd-node] (n1) at ( 0,3.0) {b};
+    \node [dd-node] (n2) at (-2,1.5) {a};
+    \node [dd-node] (n3) at ( 2,1.5) {a};
+    \node [dd-terminal] (t) at (0, 0) {$\bot$};
+    \node at ( 0,-1) {$\equiv$};
+    \draw [dd-arc] (n1) -- (n2)
+          node [dd-valuation, left] {1, 1};
+    \draw [dd-arc] (n1) -- (n3)
+          node [dd-valuation, right] {0, 0};
+    \draw [dd-arc] (n2) |-  (t)
+          node [dd-valuation, left] {0, $s^0$};
+    \draw [dd-arc] (n2) -- (t)
+          node [dd-valuation, right] {1, $s^2$};
+    \draw [dd-arc] (n3) -- (t)
+          node [dd-valuation, left] {0, $s^0$};
+    \draw [dd-arc] (n3) |- (t)
+          node [dd-valuation, right] {1, $s^2$};
+    }
+    \only<4>{
+    \node [dd-root] (n)  at ( 0,4.5) {};
+    \node [dd-node] (n1) at ( 0,3.0) {b};
+    \node [dd-node] (n2) at ( 0,1.5) {a};
+    \node [dd-terminal] (t) at (0, 0) {$\bot$};
+    \draw [dd-arc] (n) -- (n1)
+          node [dd-valuation, near end, left] {0};
+    \draw [dd-arc] (n1) .. controls (-.5, 2.25) .. (n2)
+          node [dd-valuation, near end, left] {0, $s^0$};
+    \draw [dd-arc] (n1) .. controls ( .5, 2.25) .. (n2)
+          node [dd-valuation, near end, right] {1, $s^1$};
+    \draw [dd-arc] (n2) .. controls (-.5, 0.75) .. (t)
+          node [dd-valuation, near end, left] {0, $s^0$};
+    \draw [dd-arc] (n2) .. controls ( .5, 0.75) .. (t)
+          node [dd-valuation, near end, right] {1, $s^2$};
+    }
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}
