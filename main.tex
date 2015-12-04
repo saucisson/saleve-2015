@@ -692,7 +692,7 @@
      node [dd-valuation, left] {0};
     \draw [dd-arc] (r1) -- (n1)
      node [dd-valuation, right] {c};
-    \draw [dd-arc, dashed] (r2) -- (n1)
+    \draw [dd-arc] (r2) -- (n1)
      node [dd-valuation, left] {d};
     }
   \end{tikzpicture}
@@ -796,6 +796,71 @@
       \item for arc valuations
       \item for successors
     \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{When are these optimizations applied?}
+  \begin{center}
+  \begin{tikzpicture}
+    \node [dd-node] (n1) at (0, 0) {c};
+    \only<1-2>{
+    \node [dd-node] (n2) at (3, 1) {b};
+    \node [dd-node] (n5) at (6,-1) {a};
+    }
+    \node [dd-node] (n3) at (3,-1) {b};
+    \node [dd-node] (n4) at (6, 1) {a};
+    \only<1>{
+    \node [dd-node] (m3) at (6, 3) {a};
+    \node [dd-terminal] (t0) at (9, 3) {0};
+    }
+    \node [dd-terminal] (t1) at (9, 0) {1};
+    \draw [dd-arc] (n1) -- (n3)
+     node [dd-valuation, below] {1};
+    \only<1-2>{
+    \draw [dd-arc] (n1) -- (n2)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc] (n2) -- (n4)
+     node [dd-valuation, below] {1};
+    }
+    \only<3->{
+    \draw [dd-arc] (n1) -- (n4)
+     node [dd-valuation, above] {0};
+    }
+    \draw [dd-arc] (n3) -- (n4)
+     node [dd-valuation, above] {1};
+    \draw [dd-arc] (n4) -- (t1)
+     node [dd-valuation, below] {0};
+    \only<1-2>{
+    \draw [dd-arc] (n3) -- (n5)
+     node [dd-valuation, below] {0};
+    \draw [dd-arc] (n5) -- (t1)
+     node [dd-valuation, below] {1};
+    }
+    \only<3->{
+    \draw [dd-arc] (n3) -- (t1)
+     node [dd-valuation, below] {0};
+    }
+    \only<1>{
+    \draw [dd-arc, above] (n2) -- (m3)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc, above] (n4) -- (t0)
+     node [dd-valuation, above] {1};
+    \draw [dd-arc, above] (n5) -- (t0)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc, above] (m3) -- (t0)
+     node [dd-valuation, above] {0};
+    \draw [dd-arc, above] (m3) -- (t0)
+     node [dd-valuation, below] {1};
+    }
+  \end{tikzpicture}
+  \end{center}
+  \begin{block}<4>{Answer}
+    \begin{enumerate}
+      \item Vanishing Terminal
+      \item Transparent Domain
+      \item Attributed Edges / Edge Valuation
+    \end{enumerate}
   \end{block}
 \end{frame}
 
@@ -910,19 +975,49 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Variables}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Terminals}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Stacks}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Edges}
+  \frametitle{Parameter Examples}
+  \begin{center}
+  \begin{tabular}{lcccc}
+    & $\common{X} (x_1, \dots x_n)$
+    & $c \plus{X} r$
+    & $v \minus{X} c$
+    & $\zero{X}$
+    \\
+    Variables
+    & $\mathit{min} (x_1, \dots x_n)$
+    & $c + r$
+    & $v - c$
+    & $0$
+    \\
+    Terminals
+    & $\mathit{min} (x_1, \dots x_n)$
+    & $c + r$
+    & $v - c$
+    & $0$
+    \\
+    Values
+    & $\mathit{min} (x_1, \dots x_n)$
+    & $c + r$
+    & $v - c$
+    & $0$
+    \\
+    Successors
+    & $\begin{cases}
+       x \text{ if } \forall i, x_i = x_1 \\
+       \bot \text{ otherwise}
+       \end{cases}$
+    & $\begin{cases}
+       c \text{ if } c \neq \bot \\
+       r \text{ otherwise} \\
+       \end{cases}$
+    & $\begin{cases}
+       \bot \text{ if } c \neq \bot \\
+       v    \text{ otherwise} \\
+       \end{cases}$
+    & $\bot$
+    \\
+  \end{tabular}
+  \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -939,7 +1034,7 @@
   \par\bigskip\par
   \only<1>{%
   \begin{tikzpicture}[yscale=3]
-    \useasboundingbox (-1.1,-.3) rectangle (11.6,1);
+    \useasboundingbox (-1.1,-.3) rectangle (10.6,1);
     \node [coordinate] (n) at (0,0.5) {};
     \foreach \y in {0,2,4,6,8} \draw(0,\y/10) node [anchor=east] {\scriptsize\y0};
     \foreach \x in {0,1,2,3,4,5,6,7,8,9} \draw(\x,0) node [anchor=north] {\scriptsize.\x};
@@ -959,7 +1054,7 @@
             (9.5,.0)
             (10.5,.0)
           };
-    \draw [gray] (0,0) grid[xstep=1,ystep=.2] (11,1);
+    \draw [gray] (0,0) grid[xstep=1,ystep=.2] (10,1);
   \end{tikzpicture}
   }%
   \only<2>{%
@@ -995,10 +1090,32 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Stack Compression}
+  \frametitle{Stacks}
+  Cannot push a single value upwards for:
   \begin{itemize}
-    \item compress stacks
+    \item arc values
+    \item successors
+  \end{itemize}
+
+  Use stacks instead of values, but:
+  \begin{itemize}
+    \item consider stacks as infinite
+    \item use default value
+  \end{itemize}
+
+  \begin{minted}{lua}
+      0 0 1 2 3 0 0
+    = 0 0 1 2 3 0 0 0 0 ...
+    = 0 0 1 2 3
+  \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Stack Compression}
+  Stacks are a big part of labels size:
+  \begin{itemize}
     \item long repetitive sequences
+    \item compress stacks
     \item use the Sequitur~\cite{1997-nevill-0} algorithm
   \end{itemize}
   \begin{minted}{lua}
@@ -1010,7 +1127,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Benchmarks}
+  \frametitle{Benchmarks: Stack Compression}
   \begin{center}
   \begin{tabular}{|l|c|c|c|c|}
     \hline
@@ -1031,21 +1148,35 @@
     \node at (3,0) [anchor=north] {\scriptsize .6};
     \node at (4,0) [anchor=north] {\scriptsize .8};
     \node at (5,0) [anchor=north] {\scriptsize 1};
-    \node at (6,0) [anchor=north] {\scriptsize 1.1};
-    \node at (7,0) [anchor=north] {\scriptsize 1.2};
+    \node at (6,0) [anchor=north] {\scriptsize 1.5};
+    \node at (7,0) [anchor=north] {\scriptsize 5};
     \node at (4.5,-.1) [anchor=north] {\scriptsize \# final labels / \# initial labels};
     \node at (0,1.2) [anchor=south] {\scriptsize \# DDs};
+    \only<2->{%
     \draw [line width=10mm, draw=blue!30]
           plot [ycomb] coordinates {
             (0.5,.76)
             (1.5,1.17)
             (2.5,.50)
             (3.5,.04)
-            (4.5,.01)
-            (5.5,.03)
-            (6.5,.01)
-            (7.5,.0)
+            (4.5,.03)
+            (5.5,.01)
+            (6.5,.0)
            };
+    }%
+    \only<1->{%
+    \draw [line width=5mm, draw=red!30]
+          plot [ycomb] coordinates {
+            (0.5,.36)
+            (1.5,.80)
+            (2.5,.85)
+            (3.5,.20)
+            (4.5,.14)
+            (5.5,.04)
+            (6.5,.04)
+            (7.5,.09)
+           };
+    }%
     \draw [gray] (0,0) grid[xstep=1,ystep=.2] (8,1.2);
   \end{tikzpicture}
   \end{center}
@@ -1064,7 +1195,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Benchmarks}
+  \frametitle{Benchmarks: Sensitivity to Variable Order}
   \begin{center}
   \begin{tabular}{|l|c|c|c|c|}
     \hline
